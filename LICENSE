@@ -1,0 +1,19 @@
+Dual License: GPL-3.0-or-later AND LGPL-2.1-or-later
+
+This project ("Pure Spellbook and things") is dual-licensed under:
+1. GNU General Public License v3.0 or later (GPL-3.0-or-later)
+2. GNU Lesser General Public License v2.1 or later (LGPL-2.1-or-later)
+
+This dual-license structure ensures compatibility with LGPL-2.1-licensed dependencies and reference logic (L2Library / L2Complements) while adhering to the project's GNU GPL policy.
+You may choose either license when using, modifying, or redistributing this software.
+
+---
+
+デュアルライセンス: GPL-3.0-or-later AND LGPL-2.1-or-later
+
+本プロジェクト「Pure Spellbook and things」は以下のデュアルライセンスの下で提供されます：
+1. GNU General Public License v3.0 以降 (GPL-3.0-or-later)
+2. GNU Lesser General Public License v2.1 以降 (LGPL-2.1-or-later)
+
+本デュアルライセンス構成は、LGPL-2.1 ライセンスの依存ライブラリおよび参考ロジック（L2Library / L2Complements）との整合性を保ちつつ、本プロジェクトの GNU GPL 方針に準拠するためのものです。
+本ソフトウェアの使用・改変・再配布にあたっては、いずれかのライセンスを選択して適用することができます。

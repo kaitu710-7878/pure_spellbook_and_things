@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.purespellbook.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.pure_spellbook_and_things.refmap.json",
+  "mixins": [
+    "AbstractSpellMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

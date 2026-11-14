@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "textures": {
+      "book": "pure_spellbook_and_things:item/spell_book_models/pure_spellbook",
+      "particle": "pure_spellbook_and_things:item/spell_book_models/pure_spellbook"
+    },
+    "parent": "irons_spellbooks:item/template_spell_book_model"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "item/generated",
+      "textures": {
+        "layer0": "pure_spellbook_and_things:item/pure_spellbook"
+      }
+    },
+    "head": {
+      "textures": {
+        "book": "pure_spellbook_and_things:item/spell_book_models/pure_spellbook",
+        "particle": "pure_spellbook_and_things:item/spell_book_models/pure_spellbook"
+      },
+      "parent": "irons_spellbooks:item/template_spell_book_model_open"
+    }
+  }
+}

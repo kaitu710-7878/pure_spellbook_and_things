@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "pure_spellbook_and_things:block/pure_scroll_forge",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "pure_spellbook_and_things:block/pure_scroll_forge"
+    },
+    "facing=south": {
+      "model": "pure_spellbook_and_things:block/pure_scroll_forge",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pure_spellbook_and_things:block/pure_scroll_forge",
+      "y": 270
+    }
+  }
+}
