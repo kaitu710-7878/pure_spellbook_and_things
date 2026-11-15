@@ -4,11 +4,11 @@
   "item.pure_spellbook_and_things.pure_scroll_forge": "ピュアスクロールフォージ",
   "item.pure_spellbook_and_things.pure_spellbook": "ピュアスペルブック",
 
-  "school.pure_spellbook_and_things.pure": "ピュア",
+  "school.pure_spellbook_and_things.pure": "無垢",
 
   "attribute.name.pure_spellbook_and_things.over_hp": "オーバーHP",
-  "attribute.pure_spellbook_and_things.pure_spell_power": "ピュア魔法威力",
-  "attribute.pure_spellbook_and_things.pure_magic_resist": "ピュア魔法耐性",
+  "attribute.pure_spellbook_and_things.pure_spell_power": "無垢魔法威力",
+  "attribute.pure_spellbook_and_things.pure_magic_resist": "無垢魔法耐性",
 
   "ui.pure_spellbook_and_things.pure_scroll_forge_title": "ピュアスクロールフォージ",
   "ui.pure_spellbook_and_things.requires_ink_rarity": "より上位のインクが必要です",
@@ -24,7 +24,7 @@
 
   "effect.pure_spellbook_and_things.empowered": "エンパワード",
   "effect.pure_spellbook_and_things.weapon_interaction": "ウェポンインタラクション",
-  "effect.pure_spellbook_and_things.soul_shaving": "ソウルシェービング",
+  "effect.pure_spellbook_and_things.soul_shaving": "魂削り",
   "effect.pure_spellbook_and_things.healing_attack": "ヒーリングアタック",
   "effect.pure_spellbook_and_things.overload": "オーバーロード",
   "effect.pure_spellbook_and_things.purification": "ピュリフィケーション",
@@ -33,7 +33,7 @@
   "spell.pure_spellbook_and_things.empowered.guide": "魔法威力+40%、近接攻撃力+85%、詠唱中断無効の効果を付与します。",
   "spell.pure_spellbook_and_things.weapon_interaction": "ウェポンインタラクション",
   "spell.pure_spellbook_and_things.weapon_interaction.guide": "手に持つ武器の攻撃力分をすべての魔法ダメージに加算します。",
-  "spell.pure_spellbook_and_things.soul_shaving": "ソウルシェービング",
+  "spell.pure_spellbook_and_things.soul_shaving": "魂削り",
   "spell.pure_spellbook_and_things.soul_shaving.guide": "すべての攻撃がヒット毎に最大体力の1%(1～40)をセットヘルスで直接削ります（無敵時間・多段ヒットも誘発）。",
   "spell.pure_spellbook_and_things.healing_attack": "ヒーリングアタック",
   "spell.pure_spellbook_and_things.healing_attack.guide": "近接攻撃ヒット時にマナを3、魔法攻撃ヒット時にHPを1回復します。",
@@ -41,7 +41,7 @@
   "spell.pure_spellbook_and_things.overload_overclocking.guide": "すべての呪文のクールダウンとマナを全回復し、最大マナを10%×レベル下げるオーバーロードを付与します。",
   "spell.pure_spellbook_and_things.vitality_recovery": "バイタリティリカバリー",
   "spell.pure_spellbook_and_things.vitality_recovery.guide": "満腹度・隠し満腹度・HPを回復し、デバフを浄化します。回復量は魔法威力に依存します。",
-  "spell.pure_spellbook_and_things.sustained_purification": "サステインドピュリフィケーション",
+  "spell.pure_spellbook_and_things.sustained_purification": "持続的浄化",
   "spell.pure_spellbook_and_things.sustained_purification.guide": "15秒間、デバフを継続的に消去・無効化するピュリフィケーションを付与します。",
   "spell.pure_spellbook_and_things.overheel": "オーバーヒール",
   "spell.pure_spellbook_and_things.overheel.guide": "HPを全回復し、減少したHPを即座に自動回復するオーバーHPを獲得します（死亡時リセット）。",

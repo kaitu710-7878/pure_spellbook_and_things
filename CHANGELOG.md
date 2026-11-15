@@ -1,5 +1,13 @@
 # Changelog / 変更履歴
 
+## [1.0.2-alpha] - 2026-11-15
+
+### Added / 追加
+- **Pure School Scroll Texture & Model / 無垢学校のスクロールテクスチャ・モデル**: Added custom 16x16 pastel-iridescent white scroll texture (`scroll_pure.png`) with black runes and registered `item/scroll_pure` model via `ModelEvent.RegisterAdditional`. / 白基調・黒文字・パステル虹色グラデーションの無垢学校スクロール用テクスチャ (`scroll_pure.png`) およびモデル (`item/scroll_pure`) を追加・登録。
+
+### Changed / 変更
+- **Japanese Localization Exceptions / 日本語表記の調整**: Updated school/attribute name to `無垢` (`無垢魔法威力` / `無垢魔法耐性`), `soul_shaving` to `魂削り`, and `sustained_purification` to `持続的浄化` in `ja_jp.json`. / `ja_jp.json` にて学校・属性名を「無垢」（「無垢魔法威力」「無垢魔法耐性」）、`soul_shaving` を「魂削り」、`sustained_purification` を「持続的浄化」に調整。
+
 ## [1.0.1-alpha] - 2026-11-15
 
 ### Changed / 変更
