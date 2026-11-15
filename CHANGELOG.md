@@ -1,5 +1,12 @@
 # Changelog / 変更履歴
 
+## [1.0.4-alpha] - 2026-11-15
+
+### Fixed / 修正
+- **Pure Scroll Forge Glint & Ink Facing / ピュアスクロールフォージの光沢表示とインクの向き修正**:
+  - Replaced `RenderType.glint()` (which uses `EQUAL_DEPTH_TEST` and fails when scaled) with a custom `PureRenderTypes.blockGlint()` using `LEQUAL_DEPTH_TEST` and `POLYGON_OFFSET_LAYERING` so the enchanted glint renders reliably without flickering. / `EQUAL_DEPTH_TEST` によりスケール変更時に消えていた `RenderType.glint()` を廃止し、`LEQUAL_DEPTH_TEST` + `POLYGON_OFFSET_LAYERING` を用いたカスタム `PureRenderTypes.blockGlint()` を導入してチカチカせず確実にエンチャント光沢が表示されるよう修正。
+  - Fixed `getBlockFacingDegrees` direction mapping (`NORTH -> 180`, `EAST -> 90`, `WEST -> -90`, `SOUTH -> 0`) to match Iron's Spells 'n Spellbooks' `ScrollForgeRenderer`. / `getBlockFacingDegrees` の方角マッピングを本家 `ScrollForgeRenderer` と一致させ、同じ向きに設置した際インクが反対側に描画される不具合を修正。
+
 ## [1.0.3-alpha] - 2026-11-15
 
 ### Fixed / 修正

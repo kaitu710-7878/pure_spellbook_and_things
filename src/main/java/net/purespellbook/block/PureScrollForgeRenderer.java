@@ -18,9 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
+import net.purespellbook.client.PureRenderTypes;
 
 /**
- * Renders the Pure Scroll Forge with a Z-fighting-free enchanted glint overlay
+ * Renders the Pure Scroll Forge with a steady enchanted glint overlay (via polygon offset)
  * and any placed ink bottle lying flat on the table matching ISS ScrollForgeRenderer.
  */
 public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollForgeBlockEntity> {
@@ -38,12 +39,10 @@ public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollFo
         var blockRenderer = Minecraft.getInstance().getBlockRenderer();
         BakedModel model = blockRenderer.getBlockModel(state);
 
-        // Slight uniform scale around block center prevents Z-fighting flicker with the chunk mesh
+        // Render enchanted glint using LEQUAL + polygon offset to prevent Z-fighting while staying visible
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.scale(1.003F, 1.003F, 1.003F);
-        poseStack.translate(-0.5D, -0.5D, -0.5D);
-        VertexConsumer glintConsumer = bufferSource.getBuffer(RenderType.glint());
+        RenderType glintType = PureRenderTypes.blockGlint();
+        VertexConsumer glintConsumer = bufferSource.getBuffer(glintType);
         blockRenderer.getModelRenderer().renderModel(
                 poseStack.last(),
                 glintConsumer,
@@ -53,7 +52,7 @@ public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollFo
                 packedLight,
                 OverlayTexture.NO_OVERLAY,
                 ModelData.EMPTY,
-                RenderType.glint()
+                glintType
         );
         poseStack.popPose();
 
@@ -82,9 +81,9 @@ public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollFo
     private static int getBlockFacingDegrees(BlockState state) {
         Direction facing = state.getValue(PureScrollForgeBlock.FACING);
         return switch (facing) {
-            case SOUTH -> 180;
-            case WEST -> 90;
-            case EAST -> -90;
+            case NORTH -> 180;
+            case EAST -> 90;
+            case WEST -> -90;
             default -> 0;
         };
     }
