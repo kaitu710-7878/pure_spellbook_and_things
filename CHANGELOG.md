@@ -1,5 +1,10 @@
 # Changelog / 変更履歴
 
+## [1.0.6-beta] - 2026-11-15
+
+### Changed / 変更
+- Promoted release stage from Alpha to Beta (`1.0.6-beta`) following in-game verification. / 実機での動作確認を完了し、リリース段階を Alpha から Beta（`1.0.6-beta`）へ移行。
+
 ## [1.0.5-alpha] - 2026-11-15
 
 ### Added / 追加
