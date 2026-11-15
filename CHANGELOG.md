@@ -1,5 +1,12 @@
 # Changelog / 変更履歴
 
+## [1.0.3-alpha] - 2026-11-15
+
+### Fixed / 修正
+- **Pure Scroll Forge Renderer / ピュアスクロールフォージの描画修正**:
+  - Eliminated Z-fighting flickering on the enchanted glint overlay by applying a subtle `1.003x` offset around the block center. / ブロック中心を基準に `1.003` 倍の微小オフセットを加え、移動時のエンチャント光沢のZファイティング（チカチカ）を解消。
+  - Aligned placed ink item rotation and position (`INK_POS` + flat table orientation) with Iron's Spells 'n Spellbooks' `ScrollForgeRenderer` so ink no longer clips into the table. / 設置されたインクの座標・回転を本家 `ScrollForgeRenderer` と一致させ、インクがテーブルに刺さらないよう修正。
+
 ## [1.0.2-alpha] - 2026-11-15
 
 ### Added / 追加
