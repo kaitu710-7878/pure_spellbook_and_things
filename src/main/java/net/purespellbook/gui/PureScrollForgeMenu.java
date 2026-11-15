@@ -3,9 +3,11 @@ package net.purespellbook.gui;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
+import io.redspace.ironsspellbooks.api.spells.SpellRarity;
 import io.redspace.ironsspellbooks.item.InkItem;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -109,12 +111,36 @@ public class PureScrollForgeMenu extends AbstractContainerMenu {
         }
     }
 
+    /**
+     * Computes the forged scroll level for a given spell and ink rarity.
+     * Any ink at or above the spell's minimum rarity can craft it; single-rarity
+     * or max-level-1 spells (e.g. Pocket Dimension, Pure spells) remain craftable
+     * at level 1 even when higher-rarity ink such as Legendary Ink is used.
+     */
+    public static int getCraftableSpellLevel(AbstractSpell spell, SpellRarity inkRarity) {
+        if (spell == null || inkRarity == null || spell.equals(SpellRegistry.none())) {
+            return 0;
+        }
+        if (inkRarity.getValue() < spell.getMinRarity()) {
+            return 0;
+        }
+        int maxLevel = Math.max(1, spell.getMaxLevel());
+        if (maxLevel == 1 || inkRarity.getValue() == spell.getMinRarity()) {
+            return 1;
+        }
+        int cappedRarityVal = Math.min(inkRarity.getValue(), spell.getMaxRarity());
+        SpellRarity[] rarities = SpellRarity.values();
+        SpellRarity cappedRarity = rarities[Mth.clamp(cappedRarityVal, 0, rarities.length - 1)];
+        int level = spell.getMinLevelForRarity(cappedRarity);
+        return Mth.clamp(level, 1, maxLevel);
+    }
+
     private void setupResultSlot(AbstractSpell spell) {
         ItemStack inkStack = this.inkSlot.getItem();
         ItemStack result = ItemStack.EMPTY;
 
         if (!inkStack.isEmpty() && !spell.equals(SpellRegistry.none()) && inkStack.getItem() instanceof InkItem ink) {
-            int level = spell.getMinLevelForRarity(ink.getRarity());
+            int level = getCraftableSpellLevel(spell, ink.getRarity());
             if (level > 0) {
                 result = new ItemStack(ItemRegistry.SCROLL.get());
                 result.setCount(1);

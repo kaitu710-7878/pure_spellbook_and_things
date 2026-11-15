@@ -1,5 +1,12 @@
 # Changelog / 変更履歴
 
+## [1.0.1-alpha] - 2026-11-15
+
+### Changed / 変更
+- **Pure Scroll Forge UI & Tooltips / ピュアスクロールフォージUI・ツールチップ**: Matched card rendering, runic font for insufficient ink, and hover spell description tooltips (`TooltipsUtils.createSpellDescriptionTooltip`) to Iron's Spells 'n Spellbooks' vanilla Scroll Forge. / カード描画、インク不足時のルーン文字表示、マウスホバー時の呪文説明ツールチップを通常のスクロールフォージと同一の仕様に変更。
+- **Single-Rarity Scroll Crafting / 単一レアリティ呪文の上位インク作成対応**: Allowed single-rarity and max-level-1 spells (such as Pocket Dimension or Pure spells) to be forged using any ink at or above their minimum rarity (e.g. Legendary Ink). / レアリティが1種類のみの呪文や最大レベル1の呪文を、最小レアリティ以上の上位インク（レジェンダリーインク等）を消費して作成できるように修正。
+- **Japanese Localization / 日本語ローカライズ拡充**: Localized all Pure spell names, effect names, attributes, creative tab, and guide descriptions in `ja_jp.json` using katakana loanwords. / `ja_jp.json` 内のすべての呪文名・エフェクト名・属性名・クリエイティブタブ・説明文を日本語（カタカナ表記）へ完全対応。
+
 ## [1.0.0-alpha] - 2026-11-15
 
 ### Added / 追加
