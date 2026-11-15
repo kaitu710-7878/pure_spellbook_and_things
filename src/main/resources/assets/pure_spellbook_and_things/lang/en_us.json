@@ -28,6 +28,7 @@
   "effect.pure_spellbook_and_things.healing_attack": "Healing Attack",
   "effect.pure_spellbook_and_things.overload": "Overload",
   "effect.pure_spellbook_and_things.purification": "Purification",
+  "effect.pure_spellbook_and_things.evasive_dodge": "Evasive Dodge",
 
   "spell.pure_spellbook_and_things.empowered": "Empowered",
   "spell.pure_spellbook_and_things.empowered.guide": "Grants +40% Spell Power, +85% Attack Damage, and uninterruptible casting.",

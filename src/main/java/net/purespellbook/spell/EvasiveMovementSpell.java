@@ -6,7 +6,6 @@ import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.network.particles.TeleportParticlesPacket;
-import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import io.redspace.ironsspellbooks.spells.ender.TeleportSpell;
 import net.minecraft.network.chat.Component;
@@ -17,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.purespellbook.registry.ModMobEffects;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,8 +68,8 @@ public class EvasiveMovementSpell extends AbstractPureSpell {
         entity.resetFallDistance();
         entity.playSound(SoundEvents.ENDERMAN_TELEPORT, 2.0F, 1.0F);
 
-        // Amplifier 0 grants 1 evasion hit in ISS EvasionEffect
-        entity.addEffect(new MobEffectInstance(MobEffectRegistry.EVASION.get(),
+        // Amplifier 0 grants 1 evasion hit without teleporting
+        entity.addEffect(new MobEffectInstance(ModMobEffects.EVASIVE_DODGE.get(),
                 getEvasionDurationTicks(spellLevel), 0, false, false, true));
 
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);

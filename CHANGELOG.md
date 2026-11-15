@@ -1,5 +1,14 @@
 # Changelog / 変更履歴
 
+## [1.0.5-alpha] - 2026-11-15
+
+### Added / 追加
+- **Non-Teleporting Evasion Effect / テレポート無し回避エフェクト (`evasive_dodge`)**: Added `EvasiveDodgeEffect` using the same damage-negation logic as ISS's `EvasionEffect` without random teleportation, applied for 5 seconds by `Evasive Movement`. / ダメージ・飛翔体回避ロジックを本家 `EvasionEffect` と同等に保ちつつランダムテレポートを発生させない専用エフェクト `evasive_dodge`（5秒）を追加し、`Evasive Movement` から付与するよう変更。
+
+### Fixed / 修正
+- **Pure Scroll Forge Glint Rendering / ピュアスクロールフォージの光沢描画修正**: Extracted `POSITION_TEX` vertices directly from `BakedQuad`s in `PureScrollForgeRenderer` so `PureRenderTypes.blockGlint()` renders cleanly without vertex format mismatch. / `PureScrollForgeRenderer` にて `BakedQuad` から直接 `POSITION_TEX` 頂点を出力するように修正し、頂点フォーマット不一致によるエンチャント光沢の非表示を解消。
+- **Creative Tab Name / クリエイティブタブ名**: Kept the creative tab name in English (`Pure Spellbook and things`) in `ja_jp.json`. / `ja_jp.json` のクリエイティブタブ名を英語表記（`Pure Spellbook and things`）に戻しました。
+
 ## [1.0.4-alpha] - 2026-11-15
 
 ### Fixed / 修正

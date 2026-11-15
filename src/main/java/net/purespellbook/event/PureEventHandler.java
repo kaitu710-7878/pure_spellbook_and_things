@@ -14,7 +14,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -23,6 +26,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purespellbook.PureSpellbookMod;
+import net.purespellbook.effect.EvasiveDodgeEffect;
 import net.purespellbook.effect.PurificationEffect;
 import net.purespellbook.registry.ModAttributes;
 import net.purespellbook.registry.ModMobEffects;
@@ -66,12 +70,30 @@ public class PureEventHandler {
     }
 
     @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (event.getRayTraceResult() instanceof EntityHitResult entityHit
+                && entityHit.getEntity() instanceof LivingEntity target
+                && !target.level().isClientSide
+                && target.hasEffect(ModMobEffects.EVASIVE_DODGE.get())) {
+            Projectile projectile = event.getProjectile();
+            DamageSource indirect = target.damageSources().indirectMagic(projectile, projectile.getOwner());
+            if (EvasiveDodgeEffect.doEffect(target, indirect)) {
+                event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onLivingAttack(LivingAttackEvent event) {
         LivingEntity target = event.getEntity();
         if (target.level().isClientSide || !target.isAlive()) {
             return;
         }
         DamageSource source = event.getSource();
+        if (target.hasEffect(ModMobEffects.EVASIVE_DODGE.get()) && EvasiveDodgeEffect.doEffect(target, source)) {
+            event.setCanceled(true);
+            return;
+        }
         if (!(source.getEntity() instanceof LivingEntity attacker) || attacker == target) {
             return;
         }

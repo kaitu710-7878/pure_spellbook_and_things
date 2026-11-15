@@ -11,6 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.purespellbook.PureSpellbookMod;
 import net.purespellbook.effect.EmpoweredEffect;
+import net.purespellbook.effect.EvasiveDodgeEffect;
 import net.purespellbook.effect.OverloadEffect;
 import net.purespellbook.effect.PurificationEffect;
 import net.purespellbook.effect.SimplePureBuffEffect;
@@ -42,6 +43,9 @@ public class ModMobEffects {
 
     public static final RegistryObject<MobEffect> PURIFICATION = MOB_EFFECTS.register("purification",
             () -> new PurificationEffect(MobEffectCategory.BENEFICIAL, 0xFEF08A));
+
+    public static final RegistryObject<MobEffect> EVASIVE_DODGE = MOB_EFFECTS.register("evasive_dodge",
+            () -> new EvasiveDodgeEffect(MobEffectCategory.BENEFICIAL, 0x9D6BFF));
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

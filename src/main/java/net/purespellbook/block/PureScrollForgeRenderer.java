@@ -1,5 +1,6 @@
 package net.purespellbook.block;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -7,25 +8,30 @@ import io.redspace.ironsspellbooks.item.InkItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
 import net.purespellbook.client.PureRenderTypes;
+import org.joml.Matrix4f;
+
+import java.util.List;
 
 /**
- * Renders the Pure Scroll Forge with a steady enchanted glint overlay (via polygon offset)
- * and any placed ink bottle lying flat on the table matching ISS ScrollForgeRenderer.
+ * Renders the Pure Scroll Forge with a steady enchanted glint overlay (via POSITION_TEX quad emission
+ * + polygon offset) and any placed ink bottle lying flat on the table matching ISS ScrollForgeRenderer.
  */
 public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollForgeBlockEntity> {
     private static final Vec3 INK_POS = new Vec3(0.175D, 0.876D, 0.25D);
+    private static final int BLOCK_VERTEX_STRIDE = DefaultVertexFormat.BLOCK.getIntegerSize();
     private final ItemRenderer itemRenderer;
 
     public PureScrollForgeRenderer(BlockEntityRendererProvider.Context context) {
@@ -36,24 +42,20 @@ public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollFo
     public void render(PureScrollForgeBlockEntity blockEntity, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BlockState state = blockEntity.getBlockState();
-        var blockRenderer = Minecraft.getInstance().getBlockRenderer();
-        BakedModel model = blockRenderer.getBlockModel(state);
+        BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
 
-        // Render enchanted glint using LEQUAL + polygon offset to prevent Z-fighting while staying visible
+        // Emit pure POSITION_TEX vertices matching PureRenderTypes.blockGlint()
         poseStack.pushPose();
         RenderType glintType = PureRenderTypes.blockGlint();
         VertexConsumer glintConsumer = bufferSource.getBuffer(glintType);
-        blockRenderer.getModelRenderer().renderModel(
-                poseStack.last(),
-                glintConsumer,
-                state,
-                model,
-                1.0F, 1.0F, 1.0F,
-                packedLight,
-                OverlayTexture.NO_OVERLAY,
-                ModelData.EMPTY,
-                glintType
-        );
+        Matrix4f matrix = poseStack.last().pose();
+        RandomSource random = RandomSource.create();
+        for (Direction dir : Direction.values()) {
+            random.setSeed(42L);
+            emitGlintQuads(matrix, glintConsumer, model.getQuads(state, dir, random, ModelData.EMPTY, null));
+        }
+        random.setSeed(42L);
+        emitGlintQuads(matrix, glintConsumer, model.getQuads(state, null, random, ModelData.EMPTY, null));
         poseStack.popPose();
 
         // Render ink bottle flat on the table surface (matching ISS ScrollForgeRenderer)
@@ -69,6 +71,21 @@ public class PureScrollForgeRenderer implements BlockEntityRenderer<PureScrollFo
             this.itemRenderer.renderStatic(inkStack, ItemDisplayContext.FIXED, packedLight, packedOverlay,
                     poseStack, bufferSource, blockEntity.getLevel(), (int) blockEntity.getBlockPos().asLong());
             poseStack.popPose();
+        }
+    }
+
+    private static void emitGlintQuads(Matrix4f matrix, VertexConsumer consumer, List<BakedQuad> quads) {
+        for (BakedQuad quad : quads) {
+            int[] vertices = quad.getVertices();
+            for (int v = 0; v < 4; v++) {
+                int base = v * BLOCK_VERTEX_STRIDE;
+                float x = Float.intBitsToFloat(vertices[base]);
+                float y = Float.intBitsToFloat(vertices[base + 1]);
+                float z = Float.intBitsToFloat(vertices[base + 2]);
+                float u = Float.intBitsToFloat(vertices[base + 4]);
+                float vTex = Float.intBitsToFloat(vertices[base + 5]);
+                consumer.vertex(matrix, x, y, z).uv(u, vTex).endVertex();
+            }
         }
     }
 

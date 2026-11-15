@@ -1,5 +1,5 @@
 {
-  "itemGroup.pure_spellbook_and_things": "ピュアスペルブック＆シングス",
+  "itemGroup.pure_spellbook_and_things": "Pure Spellbook and things",
   "block.pure_spellbook_and_things.pure_scroll_forge": "ピュアスクロールフォージ",
   "item.pure_spellbook_and_things.pure_scroll_forge": "ピュアスクロールフォージ",
   "item.pure_spellbook_and_things.pure_spellbook": "ピュアスペルブック",
@@ -28,6 +28,7 @@
   "effect.pure_spellbook_and_things.healing_attack": "ヒーリングアタック",
   "effect.pure_spellbook_and_things.overload": "オーバーロード",
   "effect.pure_spellbook_and_things.purification": "ピュリフィケーション",
+  "effect.pure_spellbook_and_things.evasive_dodge": "イヴェイシブドッジ",
 
   "spell.pure_spellbook_and_things.empowered": "エンパワード",
   "spell.pure_spellbook_and_things.empowered.guide": "魔法威力+40%、近接攻撃力+85%、詠唱中断無効の効果を付与します。",
