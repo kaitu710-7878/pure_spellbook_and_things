@@ -27,17 +27,34 @@ public final class AkashicRecordHelper {
     private AkashicRecordHelper() {}
 
     public static boolean isValidScroll(ItemStack stack) {
+        return isValidScroll(stack, null);
+    }
+
+    public static boolean isValidScroll(ItemStack stack, @Nullable LivingEntity entity) {
         if (stack.isEmpty() || !(stack.getItem() instanceof Scroll)) {
             return false;
         }
         if (ISpellContainer.isSpellContainer(stack)) {
             SpellData data = ISpellContainer.get(stack).getSpellAtIndex(0);
-            if (data != null && (data.getSpell() instanceof AkashicRecordAccessSpell
-                    || data.getSpell() instanceof AkashicRecordExecSpell)) {
-                return false;
+            if (data != null && data.getSpell() != null) {
+                AbstractSpell spell = data.getSpell();
+                if (spell instanceof AkashicRecordAccessSpell || spell instanceof AkashicRecordExecSpell) {
+                    return false;
+                }
+                if (isRecastSpell(spell, data.getLevel(), entity)) {
+                    return false;
+                }
             }
         }
         return true;
+    }
+
+    public static boolean isRecastSpell(AbstractSpell spell, int spellLevel, @Nullable LivingEntity entity) {
+        try {
+            return spell.getRecastCount(spellLevel, entity) > 0;
+        } catch (Exception ignored) {
+            return false;
+        }
     }
 
     @Nullable

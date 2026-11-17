@@ -1,5 +1,12 @@
 # Changelog / 変更履歴
 
+## [1.1.2-beta] - 2026-11-17
+
+### Fixed / 修正
+- **Target & Recast Spell Stability / ターゲット魔法の安定化と弾薬（リキャスト）魔法の格納制限**:
+  - Added pre-cast target/cast-data snapshotting in `AkashicRecordExecSpell.checkPreCastConditions` with fallback restoration during `onCast`, ensuring targeting spells execute reliably even if sight shifts or earlier spells defeat a target. / 詠唱開始時に各呪文のターゲット・プレキャスト情報をスナップショット保存し、`onCast` 時に視線外れ等があっても安定して発動するよう改善。
+  - Blocked Recast/ammunition-style spells (`getRecastCount > 0`, including `Portal`, `Flaming Barrage`, `Eldritch Blast`, etc.) from being stored in or invoked by the Akashic Record, and wrapped per-spell execution in `try/catch` to prevent server crashes such as `PortalManager.killPortal` NPE. / `Portal` や `Flaming Barrage` 等のリキャスト（弾薬）系呪文をアカシックレコードに格納不可とし、各呪文実行時の例外保護により `PortalManager.killPortal` 等のクラッシュを防止。
+
 ## [1.1.1-beta] - 2026-11-17
 
 ### Fixed / 修正

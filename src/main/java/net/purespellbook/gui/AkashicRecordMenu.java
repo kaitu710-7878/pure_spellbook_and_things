@@ -29,6 +29,7 @@ public class AkashicRecordMenu extends AbstractContainerMenu {
     public static final int SLOT_START_Y = 18;
 
     private final Container recordContainer;
+    private final Player player;
     private int currentPage = 0;
 
     public AkashicRecordMenu(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
@@ -42,6 +43,7 @@ public class AkashicRecordMenu extends AbstractContainerMenu {
     private AkashicRecordMenu(int containerId, Inventory playerInv, Container recordContainer, ServerPlayer serverPlayer) {
         super(ModMenuTypes.AKASHIC_RECORD_MENU.get(), containerId);
         this.recordContainer = recordContainer;
+        this.player = playerInv.player;
 
         this.addDataSlot(new DataSlot() {
             @Override
@@ -201,7 +203,7 @@ public class AkashicRecordMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         } else {
-            if (!AkashicRecordHelper.isValidScroll(sourceStack)
+            if (!AkashicRecordHelper.isValidScroll(sourceStack, this.player)
                     || !this.moveItemStackTo(sourceStack, 0, recordSlots, false)) {
                 return ItemStack.EMPTY;
             }
@@ -229,7 +231,7 @@ public class AkashicRecordMenu extends AbstractContainerMenu {
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return AkashicRecordHelper.isValidScroll(stack);
+            return AkashicRecordHelper.isValidScroll(stack, player);
         }
 
         @Override
