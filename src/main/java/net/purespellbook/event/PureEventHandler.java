@@ -1,6 +1,7 @@
 package net.purespellbook.event;
 
 import dev.xkmc.l2library.base.effects.ForceAddEffectEvent;
+import io.redspace.ironsspellbooks.api.events.ModifySpellLevelEvent;
 import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.events.SpellDamageEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -14,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
@@ -22,15 +24,22 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.purespellbook.PureSpellbookMod;
+import net.purespellbook.akashic.AkashicRecordHelper;
+import net.purespellbook.akashic.AkashicRecordSavedData;
 import net.purespellbook.effect.EvasiveDodgeEffect;
 import net.purespellbook.effect.PurificationEffect;
+import net.purespellbook.network.ModNetwork;
+import net.purespellbook.network.SyncAkashicRecordPacket;
 import net.purespellbook.registry.ModAttributes;
 import net.purespellbook.registry.ModMobEffects;
 import net.purespellbook.spell.AbstractPureSpell;
+import net.purespellbook.spell.AkashicRecordAccessSpell;
+import net.purespellbook.spell.AkashicRecordExecSpell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +50,25 @@ public class PureEventHandler {
 
     @SubscribeEvent
     public static void onSpellCooldownAdded(SpellCooldownAddedEvent.Pre event) {
+        if (event.getSpell() instanceof AkashicRecordExecSpell execSpell && event.getEntity() != null) {
+            int combinedCooldown = AkashicRecordHelper.getCombinedEffectiveCooldown(
+                    event.getEntity(), execSpell.getPageIndex(), event.getCastSource());
+            event.setEffectiveCooldown(combinedCooldown);
+            return;
+        }
         if (event.getSpell() instanceof AbstractPureSpell pureSpell && pureSpell.hasCooldownLevelScaling()) {
             int castLevel = MagicData.getPlayerMagicData(event.getEntity()).getCastingSpellLevel();
             if (castLevel > 1) {
                 int adjusted = Math.max(1, Math.round(event.getEffectiveCooldown() * pureSpell.getCooldownMultiplierForLevel(castLevel)));
                 event.setEffectiveCooldown(adjusted);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onModifySpellLevel(ModifySpellLevelEvent event) {
+        if (event.getSpell() instanceof AkashicRecordAccessSpell || event.getSpell() instanceof AkashicRecordExecSpell) {
+            event.setLevel(1);
         }
     }
 
@@ -204,5 +226,27 @@ public class PureEventHandler {
             SCHEDULED_TASKS.clear();
         }
         tasks.forEach(Runnable::run);
+    }
+
+    private static void syncAkashicRecord(Player player) {
+        if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
+            AkashicRecordSavedData data = AkashicRecordSavedData.get(serverPlayer.getServer());
+            ModNetwork.sendToPlayer(serverPlayer, new SyncAkashicRecordPacket(data.getRecord(serverPlayer.getUUID())));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        syncAkashicRecord(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        syncAkashicRecord(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        syncAkashicRecord(event.getEntity());
     }
 }

@@ -1,6 +1,7 @@
 package net.purespellbook.network;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -24,9 +25,25 @@ public class ModNetwork {
                 .encoder(SelectPureSpellPacket::toBytes)
                 .consumerMainThread(SelectPureSpellPacket::handle)
                 .add();
+
+        CHANNEL.messageBuilder(SwitchAkashicPagePacket.class, packetId++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SwitchAkashicPagePacket::new)
+                .encoder(SwitchAkashicPagePacket::toBytes)
+                .consumerMainThread(SwitchAkashicPagePacket::handle)
+                .add();
+
+        CHANNEL.messageBuilder(SyncAkashicRecordPacket.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncAkashicRecordPacket::new)
+                .encoder(SyncAkashicRecordPacket::toBytes)
+                .consumerMainThread(SyncAkashicRecordPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {
         CHANNEL.send(PacketDistributor.SERVER.noArg(), message);
+    }
+
+    public static <MSG> void sendToPlayer(ServerPlayer player, MSG message) {
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 }

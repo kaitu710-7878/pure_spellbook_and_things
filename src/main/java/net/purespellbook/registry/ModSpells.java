@@ -24,6 +24,12 @@ public class ModSpells {
     public static final RegistryObject<AbstractSpell> SUSTAINED_PURIFICATION = registerSpell(SustainedPurificationSpell::new);
     public static final RegistryObject<AbstractSpell> OVERHEEL = registerSpell(OverheelSpell::new);
     public static final RegistryObject<AbstractSpell> EVASIVE_MOVEMENT = registerSpell(EvasiveMovementSpell::new);
+    public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_ACCESS = registerSpell(AkashicRecordAccessSpell::new);
+    public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_EXEC_1 = registerSpell(() -> new AkashicRecordExecSpell(1));
+    public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_EXEC_2 = registerSpell(() -> new AkashicRecordExecSpell(2));
+    public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_EXEC_3 = registerSpell(() -> new AkashicRecordExecSpell(3));
+    public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_EXEC_4 = registerSpell(() -> new AkashicRecordExecSpell(4));
+    public static final RegistryObject<AbstractSpell> EXTENSION = registerSpell(ExtensionSpell::new);
 
     private static RegistryObject<AbstractSpell> registerSpell(Supplier<AbstractSpell> supplier) {
         AbstractSpell spell = supplier.get();
@@ -40,7 +46,13 @@ public class ModSpells {
                 VITALITY_RECOVERY,
                 SUSTAINED_PURIFICATION,
                 OVERHEEL,
-                EVASIVE_MOVEMENT
+                EVASIVE_MOVEMENT,
+                AKASHIC_RECORD_ACCESS,
+                AKASHIC_RECORD_EXEC_1,
+                AKASHIC_RECORD_EXEC_2,
+                AKASHIC_RECORD_EXEC_3,
+                AKASHIC_RECORD_EXEC_4,
+                EXTENSION
         );
     }
 

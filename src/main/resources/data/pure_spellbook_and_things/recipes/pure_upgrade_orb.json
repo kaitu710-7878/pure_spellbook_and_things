@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "RRR",
+    "ROR",
+    "RRR"
+  ],
+  "key": {
+    "R": { "item": "pure_spellbook_and_things:pure_rune" },
+    "O": { "item": "irons_spellbooks:upgrade_orb" }
+  },
+  "result": {
+    "item": "pure_spellbook_and_things:pure_upgrade_orb",
+    "count": 1
+  }
+}

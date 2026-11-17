@@ -1,5 +1,17 @@
 # Changelog / 変更履歴
 
+## [1.1.0-beta] - 2026-11-17
+
+### Added / 追加
+- **Pure Rune & Pure Upgrade Orb / 無垢のルーン・無垢のオーブ**:
+  - Added `pure_rune` (crafted from 1 Blank Rune + 6 Arcane Essence + 2 Cinder Essence) with enchanted glint. / ブランク・ルーン×1＋秘術のエッセンス×6＋燃え殻のエッセンス×2でクラフトできる「無垢のルーン」を追加。
+  - Added `pure_upgrade_orb` (crafted from 8 Pure Runes + 1 Upgrade Orb) granting `+5%` Pure Spell Power (`pure_power` UpgradeOrbType) to armor and spellbooks. / 無垢のルーン×8＋空白のオーブでクラフトし、防具・スペルブックに無垢魔法威力+5%を付与できる「無垢のオーブ」を追加。
+- **Akashic Record System & Spells / アカシックレコード機能・呪文 (5 Spells)**:
+  - `akashic_record_access`: Opens an ender-chest-style 4-page (6x3 slots per page) storage for any ISS scroll (400 mana, 5s cast, no cooldown, permanently locked to Lv.1). / 4ページ（各6×3）のエンダーチェスト方式スクロール保管庫を開く「アカシックレコード:アクセス」を追加。
+  - `akashic_record_exec_1` .. `4`: Simultaneously executes all scrolls stored in Pages 1–4 using combined mana (250 + sum), combined cast time, and combined cooldown while preserving each scroll's own NBT level and original school power scaling (permanently locked to Lv.1). / 各ページの格納スクロールを合算マナ・合算詠唱時間・合算クールダウンで同時発動する「アカシックレコード:実行1〜4」を追加。
+- **Extension Spell / 延長呪文 (`extension`)**:
+  - Extends all active beneficial buffs by 1m30s at their current amplifier (200 mana, 2s cast, 120s cooldown; scales with Spell Power and addon-extended levels). / 自身の持つすべてのバフを同じ効果レベルのまま1分30秒延長する「延長」を追加（魔法威力・アドオンによるレベル上限拡張に対応）。
+
 ## [1.0.6-beta] - 2026-11-15
 
 ### Changed / 変更

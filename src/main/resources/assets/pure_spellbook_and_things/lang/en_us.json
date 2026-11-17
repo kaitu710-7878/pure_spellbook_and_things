@@ -3,6 +3,8 @@
   "block.pure_spellbook_and_things.pure_scroll_forge": "Pure Scroll Forge",
   "item.pure_spellbook_and_things.pure_scroll_forge": "Pure Scroll Forge",
   "item.pure_spellbook_and_things.pure_spellbook": "Pure Spellbook",
+  "item.pure_spellbook_and_things.pure_rune": "Pure Rune",
+  "item.pure_spellbook_and_things.pure_upgrade_orb": "Pure Upgrade Orb",
 
   "school.pure_spellbook_and_things.pure": "Pure",
 
@@ -21,6 +23,12 @@
   "ui.pure_spellbook_and_things.cleanse_debuffs": "Cleanses harmful effects",
   "ui.pure_spellbook_and_things.purification_desc": "Continuously purifies debuffs for 15s",
   "ui.pure_spellbook_and_things.over_hp_gain": "+%s OverHP",
+  "ui.pure_spellbook_and_things.akashic_record_title": "Akashic Record",
+  "ui.pure_spellbook_and_things.akashic_record_page_title": "%s - Page %s",
+  "ui.pure_spellbook_and_things.akashic_access_desc": "Opens a 4-page (6x3) scroll storage",
+  "ui.pure_spellbook_and_things.akashic_exec_page": "Executes Page %s (%s stored)",
+  "ui.pure_spellbook_and_things.akashic_exec_cast_time": "Combined Cast Time: %s",
+  "ui.pure_spellbook_and_things.extension_duration": "Extends All Buffs: +%s",
 
   "effect.pure_spellbook_and_things.empowered": "Empowered",
   "effect.pure_spellbook_and_things.weapon_interaction": "Weapon Interaction",
@@ -47,5 +55,17 @@
   "spell.pure_spellbook_and_things.overheel": "Overheel",
   "spell.pure_spellbook_and_things.overheel.guide": "Fully heals HP and grants OverHP, which automatically restores missing health until depleted.",
   "spell.pure_spellbook_and_things.evasive_movement": "Evasive Movement",
-  "spell.pure_spellbook_and_things.evasive_movement.guide": "Teleports 10 blocks forward and grants 1 hit of Evasion for 5 seconds."
+  "spell.pure_spellbook_and_things.evasive_movement.guide": "Teleports 10 blocks forward and grants 1 hit of Evasion for 5 seconds.",
+  "spell.pure_spellbook_and_things.akashic_record_access": "Akashic Record: Access",
+  "spell.pure_spellbook_and_things.akashic_record_access.guide": "Opens the ender-chest-style Akashic Record with 4 pages of 6x3 scroll slots.",
+  "spell.pure_spellbook_and_things.akashic_record_exec_1": "Akashic Record: Execution I",
+  "spell.pure_spellbook_and_things.akashic_record_exec_1.guide": "Simultaneously invokes all scrolls stored on Page 1 of the Akashic Record with combined mana, cast time, and cooldown.",
+  "spell.pure_spellbook_and_things.akashic_record_exec_2": "Akashic Record: Execution II",
+  "spell.pure_spellbook_and_things.akashic_record_exec_2.guide": "Simultaneously invokes all scrolls stored on Page 2 of the Akashic Record with combined mana, cast time, and cooldown.",
+  "spell.pure_spellbook_and_things.akashic_record_exec_3": "Akashic Record: Execution III",
+  "spell.pure_spellbook_and_things.akashic_record_exec_3.guide": "Simultaneously invokes all scrolls stored on Page 3 of the Akashic Record with combined mana, cast time, and cooldown.",
+  "spell.pure_spellbook_and_things.akashic_record_exec_4": "Akashic Record: Execution IV",
+  "spell.pure_spellbook_and_things.akashic_record_exec_4.guide": "Simultaneously invokes all scrolls stored on Page 4 of the Akashic Record with combined mana, cast time, and cooldown.",
+  "spell.pure_spellbook_and_things.extension": "Extension",
+  "spell.pure_spellbook_and_things.extension.guide": "Extends the duration of all active beneficial effects without changing their amplifier. Scales with Spell Power and spell level."
 }

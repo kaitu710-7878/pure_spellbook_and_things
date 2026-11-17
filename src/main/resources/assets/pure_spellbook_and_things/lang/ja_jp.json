@@ -3,6 +3,8 @@
   "block.pure_spellbook_and_things.pure_scroll_forge": "ピュアスクロールフォージ",
   "item.pure_spellbook_and_things.pure_scroll_forge": "ピュアスクロールフォージ",
   "item.pure_spellbook_and_things.pure_spellbook": "ピュアスペルブック",
+  "item.pure_spellbook_and_things.pure_rune": "無垢のルーン",
+  "item.pure_spellbook_and_things.pure_upgrade_orb": "無垢のオーブ",
 
   "school.pure_spellbook_and_things.pure": "無垢",
 
@@ -21,6 +23,12 @@
   "ui.pure_spellbook_and_things.cleanse_debuffs": "デバフ浄化",
   "ui.pure_spellbook_and_things.purification_desc": "15秒間デバフを継続消去・無効化",
   "ui.pure_spellbook_and_things.over_hp_gain": "オーバーHP +%s",
+  "ui.pure_spellbook_and_things.akashic_record_title": "アカシックレコード",
+  "ui.pure_spellbook_and_things.akashic_record_page_title": "%s - ページ %s",
+  "ui.pure_spellbook_and_things.akashic_access_desc": "全4ページ(6×3)のスクロール保管庫を開く",
+  "ui.pure_spellbook_and_things.akashic_exec_page": "ページ%sの呪文を実行 (%s個格納)",
+  "ui.pure_spellbook_and_things.akashic_exec_cast_time": "合算詠唱時間: %s",
+  "ui.pure_spellbook_and_things.extension_duration": "全バフ延長: +%s",
 
   "effect.pure_spellbook_and_things.empowered": "エンパワード",
   "effect.pure_spellbook_and_things.weapon_interaction": "ウェポンインタラクション",
@@ -47,5 +55,17 @@
   "spell.pure_spellbook_and_things.overheel": "オーバーヒール",
   "spell.pure_spellbook_and_things.overheel.guide": "HPを全回復し、減少したHPを即座に自動回復するオーバーHPを獲得します（死亡時リセット）。",
   "spell.pure_spellbook_and_things.evasive_movement": "イヴェイシブムーブメント",
-  "spell.pure_spellbook_and_things.evasive_movement.guide": "視線の先10ブロックにワープし、5秒間1回分の回避バフを得ます。"
+  "spell.pure_spellbook_and_things.evasive_movement.guide": "視線の先10ブロックにワープし、5秒間1回分の回避バフを得ます。",
+  "spell.pure_spellbook_and_things.akashic_record_access": "アカシックレコード:アクセス",
+  "spell.pure_spellbook_and_things.akashic_record_access.guide": "エンダーチェスト方式で管理される全4ページ（各6×3スロット）のスクロール保管庫「アカシックレコード」を開きます。",
+  "spell.pure_spellbook_and_things.akashic_record_exec_1": "アカシックレコード:実行1",
+  "spell.pure_spellbook_and_things.akashic_record_exec_1.guide": "アカシックレコードのページ1に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ・詠唱時間・クールダウンは格納スクロールの合算値になります。",
+  "spell.pure_spellbook_and_things.akashic_record_exec_2": "アカシックレコード:実行2",
+  "spell.pure_spellbook_and_things.akashic_record_exec_2.guide": "アカシックレコードのページ2に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ・詠唱時間・クールダウンは格納スクロールの合算値になります。",
+  "spell.pure_spellbook_and_things.akashic_record_exec_3": "アカシックレコード:実行3",
+  "spell.pure_spellbook_and_things.akashic_record_exec_3.guide": "アカシックレコードのページ3に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ・詠唱時間・クールダウンは格納スクロールの合算値になります。",
+  "spell.pure_spellbook_and_things.akashic_record_exec_4": "アカシックレコード:実行4",
+  "spell.pure_spellbook_and_things.akashic_record_exec_4.guide": "アカシックレコードのページ4に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ・詠唱時間・クールダウンは格納スクロールの合算値になります。",
+  "spell.pure_spellbook_and_things.extension": "延長",
+  "spell.pure_spellbook_and_things.extension.guide": "自身の持つすべてのバフを同じ効果レベルのまま延長します。魔法威力と呪文レベルに応じて延長時間が増加します。"
 }

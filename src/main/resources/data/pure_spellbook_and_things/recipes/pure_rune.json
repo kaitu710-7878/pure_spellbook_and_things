@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "irons_spellbooks:blank_rune" },
+    { "item": "irons_spellbooks:arcane_essence" },
+    { "item": "irons_spellbooks:arcane_essence" },
+    { "item": "irons_spellbooks:arcane_essence" },
+    { "item": "irons_spellbooks:arcane_essence" },
+    { "item": "irons_spellbooks:arcane_essence" },
+    { "item": "irons_spellbooks:arcane_essence" },
+    { "item": "irons_spellbooks:cinder_essence" },
+    { "item": "irons_spellbooks:cinder_essence" }
+  ],
+  "result": {
+    "item": "pure_spellbook_and_things:pure_rune",
+    "count": 1
+  }
+}

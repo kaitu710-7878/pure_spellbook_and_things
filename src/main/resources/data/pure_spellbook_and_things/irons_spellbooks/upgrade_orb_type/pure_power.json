@@ -1,0 +1,9 @@
+{
+  "amount": 0.05,
+  "attribute": "pure_spellbook_and_things:pure_spell_power",
+  "containerItem": {
+    "Count": 1,
+    "id": "pure_spellbook_and_things:pure_upgrade_orb"
+  },
+  "operation": "MULTIPLY_BASE"
+}

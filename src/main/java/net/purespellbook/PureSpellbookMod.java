@@ -22,6 +22,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.purespellbook.block.PureScrollForgeRenderer;
+import net.purespellbook.gui.AkashicRecordScreen;
 import net.purespellbook.gui.PureScrollForgeScreen;
 import net.purespellbook.network.ModNetwork;
 import net.purespellbook.registry.*;
@@ -40,6 +41,8 @@ public class PureSpellbookMod {
                     .displayItems((params, output) -> {
                         output.accept(ModItems.PURE_SCROLL_FORGE.get());
                         output.accept(ModItems.PURE_SPELLBOOK.get());
+                        output.accept(ModItems.PURE_RUNE.get());
+                        output.accept(ModItems.PURE_UPGRADE_ORB.get());
                         for (RegistryObject<AbstractSpell> spellObj : ModSpells.allPureSpells()) {
                             ItemStack scroll = new ItemStack(ItemRegistry.SCROLL.get());
                             ISpellContainer.createScrollContainer(spellObj.get(), 1, scroll);
@@ -82,8 +85,10 @@ public class PureSpellbookMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() ->
-                    MenuScreens.register(ModMenuTypes.PURE_SCROLL_FORGE_MENU.get(), PureScrollForgeScreen::new));
+            event.enqueueWork(() -> {
+                MenuScreens.register(ModMenuTypes.PURE_SCROLL_FORGE_MENU.get(), PureScrollForgeScreen::new);
+                MenuScreens.register(ModMenuTypes.AKASHIC_RECORD_MENU.get(), AkashicRecordScreen::new);
+            });
         }
 
         @SubscribeEvent
