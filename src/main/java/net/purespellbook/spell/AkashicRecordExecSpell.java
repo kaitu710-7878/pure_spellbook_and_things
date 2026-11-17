@@ -6,11 +6,17 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.ICastData;
+import io.redspace.ironsspellbooks.api.spells.ICastDataSerializable;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.entity.spells.AbstractConeProjectile;
+import io.redspace.ironsspellbooks.network.casting.OnClientCastPacket;
+import io.redspace.ironsspellbooks.setup.PacketDistributor;
+import io.redspace.ironsspellbooks.spells.EntityCastData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.purespellbook.akashic.AkashicCastContext;
 import net.purespellbook.akashic.AkashicRecordHelper;
+import net.purespellbook.event.PureEventHandler;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -28,7 +35,10 @@ import java.util.Optional;
  * Akashic Record: Execution 1..4 — simultaneously invokes all stored scrolls on the given page.
  * Mana cost (250 + sum), cast time (sum), and cooldown (sum) are computed dynamically from
  * the stored scroll NBT data. Max level is permanently locked to 1.
- * Snapshots target/pre-cast data at cast start so targeting spells remain reliable at cast finish.
+ *
+ * - Target spells strictly honor pre-cast target checks at cast start (fizzling if no target existed at start).
+ * - Continuous beam/cone spells trigger cleanly for a single 10-tick burst instead of idling.
+ * - Client-cast serializable data (e.g., Burning Dash ImpulseCastData) is forwarded via OnClientCastPacket.
  */
 public class AkashicRecordExecSpell extends AbstractPureSpell {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -92,26 +102,28 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
     @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
         List<SpellData> storedSpells = AkashicRecordHelper.getPageSpells(entity, pageIndex);
-        List<ICastData> snapshots = new ArrayList<>(storedSpells.size());
+        List<PreCastEntry> entries = new ArrayList<>(storedSpells.size());
         for (SpellData data : storedSpells) {
             AbstractSpell storedSpell = data.getSpell();
             int storedLevel = data.getLevel();
             if (isBlockedSpell(storedSpell, storedLevel, entity)) {
-                snapshots.add(null);
+                entries.add(new PreCastEntry(false, null));
                 continue;
             }
-            playerMagicData.resetAdditionalCastData();
+            playerMagicData.setAdditionalCastData(null);
+            boolean passed = false;
             ICastData captured = null;
             try {
-                if (storedSpell.checkPreCastConditions(level, storedLevel, entity, playerMagicData)) {
+                passed = storedSpell.checkPreCastConditions(level, storedLevel, entity, playerMagicData);
+                if (passed) {
                     captured = playerMagicData.getAdditionalCastData();
                 }
             } catch (Throwable t) {
                 LOGGER.warn("Akashic Record pre-cast check failed for spell {}: {}", storedSpell.getSpellId(), t.getMessage());
             }
-            snapshots.add(captured);
+            entries.add(new PreCastEntry(passed, captured));
         }
-        playerMagicData.setAdditionalCastData(new AkashicPreCastData(snapshots));
+        playerMagicData.setAdditionalCastData(new AkashicPreCastData(entries));
         return true;
     }
 
@@ -119,7 +131,7 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide) {
             ICastData rawPreCast = playerMagicData.getAdditionalCastData();
-            List<ICastData> snapshots = rawPreCast instanceof AkashicPreCastData data ? data.snapshots() : List.of();
+            List<PreCastEntry> entries = rawPreCast instanceof AkashicPreCastData data ? data.entries() : List.of();
             List<SpellData> storedSpells = AkashicRecordHelper.getPageSpells(entity, pageIndex);
 
             for (int i = 0; i < storedSpells.size(); i++) {
@@ -130,24 +142,51 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
                     continue;
                 }
 
+                PreCastEntry entry = i < entries.size() ? entries.get(i) : new PreCastEntry(true, null);
+                if (!entry.passed()) {
+                    continue;
+                }
+
                 try {
-                    playerMagicData.resetAdditionalCastData();
-                    boolean ready = storedSpell.checkPreCastConditions(level, storedLevel, entity, playerMagicData);
-                    ICastData fallback = i < snapshots.size() ? snapshots.get(i) : null;
-                    if ((!ready || playerMagicData.getAdditionalCastData() == null) && fallback != null) {
-                        playerMagicData.setAdditionalCastData(fallback);
-                        ready = true;
+                    playerMagicData.setAdditionalCastData(entry.castData());
+                    storedSpell.onCast(level, storedLevel, entity, castSource, playerMagicData);
+
+                    ICastData resultCastData = playerMagicData.getAdditionalCastData();
+                    if (entity instanceof ServerPlayer serverPlayer && resultCastData instanceof ICastDataSerializable serializable) {
+                        PacketDistributor.sendToPlayer(serverPlayer,
+                                new OnClientCastPacket(storedSpell.getSpellId(), storedLevel, castSource, serializable));
                     }
-                    if (ready) {
-                        storedSpell.onCast(level, storedLevel, entity, castSource, playerMagicData);
+
+                    if (storedSpell.getCastType() == CastType.CONTINUOUS && resultCastData instanceof EntityCastData entityCastData) {
+                        playerMagicData.setAdditionalCastData(null);
+                        scheduleContinuousBurstCleanup(entityCastData);
+                    } else {
+                        playerMagicData.setAdditionalCastData(null);
                     }
                 } catch (Throwable t) {
+                    playerMagicData.setAdditionalCastData(null);
                     LOGGER.error("Akashic Record failed while executing stored spell {}", storedSpell.getSpellId(), t);
                 }
             }
-            playerMagicData.resetAdditionalCastData();
+            playerMagicData.setAdditionalCastData(null);
         }
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
+    }
+
+    private static void scheduleContinuousBurstCleanup(EntityCastData entityCastData) {
+        if (entityCastData.getCastingEntity() instanceof AbstractConeProjectile cone) {
+            PureEventHandler.scheduleDelayedTask(2, () -> {
+                if (cone.isAlive()) {
+                    cone.setDealDamageActive();
+                }
+            });
+            PureEventHandler.scheduleDelayedTask(6, () -> {
+                if (cone.isAlive()) {
+                    cone.setDealDamageActive();
+                }
+            });
+        }
+        PureEventHandler.scheduleDelayedTask(10, entityCastData::reset);
     }
 
     private static boolean isBlockedSpell(AbstractSpell spell, int spellLevel, LivingEntity entity) {
@@ -161,12 +200,14 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
         return AnimationHolder.none();
     }
 
-    private record AkashicPreCastData(List<ICastData> snapshots) implements ICastData {
+    private record PreCastEntry(boolean passed, ICastData castData) {}
+
+    private record AkashicPreCastData(List<PreCastEntry> entries) implements ICastData {
         @Override
         public void reset() {
-            for (ICastData data : snapshots) {
-                if (data != null) {
-                    data.reset();
+            for (PreCastEntry entry : entries) {
+                if (entry.castData() != null) {
+                    entry.castData().reset();
                 }
             }
         }

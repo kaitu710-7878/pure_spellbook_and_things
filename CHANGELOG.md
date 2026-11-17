@@ -1,5 +1,13 @@
 # Changelog / 変更履歴
 
+## [1.1.3-beta] - 2026-11-17
+
+### Fixed / 修正
+- **Continuous, Movement & Target Spells in Akashic Record / 照射型・移動系・ターゲット魔法の挙動修正**:
+  - Continuous spells (`CastType.CONTINUOUS`) now contribute a 10-tick (0.5s) burst cast time instead of their full channel duration and trigger active cone/beam damage bursts before cleaning up. / 照射型魔法（`CastType.CONTINUOUS`）の合算詠唱時間を最大継続時間ではなく10tick（0.5秒）に調整し、詠唱完了時に照射ダメージが発生するよう修正。
+  - Forwarded `ICastDataSerializable` (such as `Burning Dash`'s `ImpulseCastData`) via `OnClientCastPacket` so client-side movement/velocity updates apply cleanly without snagging. / バーニングダッシュ等のクライアント側速度更新用 `ICastDataSerializable` を `OnClientCastPacket` で送信し、移動が空間に引っかかる不具合を解消。
+  - Strictly used the pre-cast target snapshot from cast start without re-acquiring targets during `onCast`, so spells with no target at cast start properly fizzle. / ターゲット魔法について、詠唱開始時にターゲットがいなかった場合は詠唱中に視線を合わせても不発となるよう厳格化。
+
 ## [1.1.2-beta] - 2026-11-17
 
 ### Fixed / 修正

@@ -1,6 +1,7 @@
 package net.purespellbook.akashic;
 
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
@@ -113,7 +114,12 @@ public final class AkashicRecordHelper {
         int total = 0;
         for (SpellData data : getPageSpells(entity, pageIndex)) {
             AbstractSpell spell = data.getSpell();
-            total += Math.max(0, spell.getEffectiveCastTime(data.getLevel(), entity));
+            int effective = Math.max(0, spell.getEffectiveCastTime(data.getLevel(), entity));
+            if (spell.getCastType() == CastType.CONTINUOUS) {
+                total += Math.min(10, effective);
+            } else {
+                total += effective;
+            }
         }
         return total;
     }

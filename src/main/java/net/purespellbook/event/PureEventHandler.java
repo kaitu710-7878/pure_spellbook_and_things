@@ -47,6 +47,23 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = PureSpellbookMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PureEventHandler {
     private static final List<Runnable> SCHEDULED_TASKS = new ArrayList<>();
+    private static final List<DelayedTask> DELAYED_TASKS = new ArrayList<>();
+
+    private static final class DelayedTask {
+        int remainingTicks;
+        final Runnable action;
+
+        DelayedTask(int remainingTicks, Runnable action) {
+            this.remainingTicks = remainingTicks;
+            this.action = action;
+        }
+    }
+
+    public static void scheduleDelayedTask(int delayTicks, Runnable action) {
+        synchronized (DELAYED_TASKS) {
+            DELAYED_TASKS.add(new DelayedTask(Math.max(1, delayTicks), action));
+        }
+    }
 
     @SubscribeEvent
     public static void onSpellCooldownAdded(SpellCooldownAddedEvent.Pre event) {
@@ -219,13 +236,24 @@ public class PureEventHandler {
         }
         List<Runnable> tasks;
         synchronized (SCHEDULED_TASKS) {
-            if (SCHEDULED_TASKS.isEmpty()) {
-                return;
-            }
-            tasks = new ArrayList<>(SCHEDULED_TASKS);
+            tasks = SCHEDULED_TASKS.isEmpty() ? List.of() : new ArrayList<>(SCHEDULED_TASKS);
             SCHEDULED_TASKS.clear();
         }
         tasks.forEach(Runnable::run);
+
+        List<Runnable> dueDelayed = new ArrayList<>();
+        synchronized (DELAYED_TASKS) {
+            var it = DELAYED_TASKS.iterator();
+            while (it.hasNext()) {
+                DelayedTask dt = it.next();
+                dt.remainingTicks--;
+                if (dt.remainingTicks <= 0) {
+                    dueDelayed.add(dt.action);
+                    it.remove();
+                }
+            }
+        }
+        dueDelayed.forEach(Runnable::run);
     }
 
     private static void syncAkashicRecord(Player player) {
