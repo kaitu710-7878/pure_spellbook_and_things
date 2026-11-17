@@ -53,7 +53,10 @@ All Pure spells are **Legendary (Max Level 1)**, cannot be crafted in a normal S
 8. **Overheel**: Full heal + grants `OverHP` attribute (10 * spell power, cleared on death). Missing HP is immediately healed by consuming `OverHP`.
 9. **Evasive Movement**: Teleports 10 blocks forward along sight and grants 1 hit of non-teleporting Evasion (`Evasive Dodge`) for 5 seconds.
 10. **Akashic Record: Access**: 400 Mana, 5s cast, no cooldown (permanently locked at Lv.1). Opens an ender-chest-style 4-page storage (`6×3` slots per page) for ISS spell scrolls.
-11–14. **Akashic Record: Execution I–IV**: Permanently locked at Lv.1. Simultaneously casts all scrolls stored on Pages 1–4 at the end of casting. Combined mana (`250 + sum`), cast time (`sum`), cooldown (`sum`), and each spell's level/original school power scaling are read directly from the stored scroll NBT.
+11. **Akashic Record: Execution I**: Permanently locked at Lv.1. Simultaneously casts all scrolls stored on Page 1 at the end of casting. Combined mana (`250 + sum`), cast time (`sum`), cooldown (`sum`), and each spell's level/original school power scaling are read directly from the stored scroll NBT.
+12. **Akashic Record: Execution II**: Same as Execution I, executing Page 2.
+13. **Akashic Record: Execution III**: Same as Execution I, executing Page 3.
+14. **Akashic Record: Execution IV**: Same as Execution I, executing Page 4.
 15. **Extension**: 200 Mana, 2s cast, 2m cooldown (supports addon max-level extension). Extends the duration of all active beneficial buffs by 1m30s at the same amplifier (scales with Spell Power and spell level).
 
 #### Akashic Record Notes
@@ -114,7 +117,10 @@ Dual-licensed under **GPL-3.0-or-later AND LGPL-2.1-or-later**. See [LICENSE](LI
 8. **オーバーヒール**: HPを全回復し、`オーバーHP` 属性（10×魔法威力、死亡時消滅）を付与。HPが減ると `オーバーHP` を消費して即座に回復。
 9. **イヴェイシブムーブメント**: 視線方向へ10ブロックテレポートし、5秒間のテレポートしない回避バフ（`イヴェイシブドッジ`、1回分）を付与。
 10. **アカシックレコード:アクセス**: 消費マナ400、詠唱5秒、クールダウンなし（レベル1固定）。エンダーチェスト方式で管理される全4ページ（各6×3スロット）のスクロール保管庫「アカシックレコード」を開きます。
-11〜14. **アカシックレコード:実行1〜4**: レベル1固定。ページ1〜4に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ（`250 + 合算`）・詠唱時間（`合算`）・クールダウン（`合算`）・および各呪文のレベルや本来の属性威力参照は格納スクロールのNBTをそのまま引き継ぎます。
+11. **アカシックレコード:実行1**: レベル1固定。ページ1に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ（`250 + 合算`）・詠唱時間（`合算`）・クールダウン（`合算`）・および各呪文のレベルや本来の属性威力参照は格納スクロールのNBTをそのまま引き継ぎます。
+12. **アカシックレコード:実行2**: 実行1のページ2版。
+13. **アカシックレコード:実行3**: 実行1のページ3版。
+14. **アカシックレコード:実行4**: 実行1のページ4版。
 15. **延長**: 消費マナ200、詠唱2秒、クールダウン2分（アドオンによるレベル上限拡張に対応）。自身の持つすべてのバフを同じ効果レベルのまま1分30秒延長します（魔法威力・呪文レベルで延長時間が増加）。
 
 #### アカシックレコード使用上の注意
