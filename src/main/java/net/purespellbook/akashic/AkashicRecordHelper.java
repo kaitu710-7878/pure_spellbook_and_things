@@ -42,7 +42,7 @@ public final class AkashicRecordHelper {
                 if (spell instanceof AkashicRecordAccessSpell || spell instanceof AkashicRecordExecSpell) {
                     return false;
                 }
-                if (isRecastSpell(spell, data.getLevel(), entity)) {
+                if (spell.getCastType() == CastType.CONTINUOUS || isRecastSpell(spell, data.getLevel(), entity)) {
                     return false;
                 }
             }
@@ -114,12 +114,7 @@ public final class AkashicRecordHelper {
         int total = 0;
         for (SpellData data : getPageSpells(entity, pageIndex)) {
             AbstractSpell spell = data.getSpell();
-            int effective = Math.max(0, spell.getEffectiveCastTime(data.getLevel(), entity));
-            if (spell.getCastType() == CastType.CONTINUOUS) {
-                total += Math.min(10, effective);
-            } else {
-                total += effective;
-            }
+            total += Math.max(0, spell.getEffectiveCastTime(data.getLevel(), entity));
         }
         return total;
     }

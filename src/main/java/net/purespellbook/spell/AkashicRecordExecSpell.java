@@ -10,10 +10,8 @@ import io.redspace.ironsspellbooks.api.spells.ICastDataSerializable;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import io.redspace.ironsspellbooks.entity.spells.AbstractConeProjectile;
 import io.redspace.ironsspellbooks.network.casting.OnClientCastPacket;
 import io.redspace.ironsspellbooks.setup.PacketDistributor;
-import io.redspace.ironsspellbooks.spells.EntityCastData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.purespellbook.akashic.AkashicCastContext;
 import net.purespellbook.akashic.AkashicRecordHelper;
-import net.purespellbook.event.PureEventHandler;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -156,13 +153,7 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
                         PacketDistributor.sendToPlayer(serverPlayer,
                                 new OnClientCastPacket(storedSpell.getSpellId(), storedLevel, castSource, serializable));
                     }
-
-                    if (storedSpell.getCastType() == CastType.CONTINUOUS && resultCastData instanceof EntityCastData entityCastData) {
-                        playerMagicData.setAdditionalCastData(null);
-                        scheduleContinuousBurstCleanup(entityCastData);
-                    } else {
-                        playerMagicData.setAdditionalCastData(null);
-                    }
+                    playerMagicData.setAdditionalCastData(null);
                 } catch (Throwable t) {
                     playerMagicData.setAdditionalCastData(null);
                     LOGGER.error("Akashic Record failed while executing stored spell {}", storedSpell.getSpellId(), t);
@@ -173,25 +164,10 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 
-    private static void scheduleContinuousBurstCleanup(EntityCastData entityCastData) {
-        if (entityCastData.getCastingEntity() instanceof AbstractConeProjectile cone) {
-            PureEventHandler.scheduleDelayedTask(2, () -> {
-                if (cone.isAlive()) {
-                    cone.setDealDamageActive();
-                }
-            });
-            PureEventHandler.scheduleDelayedTask(6, () -> {
-                if (cone.isAlive()) {
-                    cone.setDealDamageActive();
-                }
-            });
-        }
-        PureEventHandler.scheduleDelayedTask(10, entityCastData::reset);
-    }
-
     private static boolean isBlockedSpell(AbstractSpell spell, int spellLevel, LivingEntity entity) {
         return spell instanceof AkashicRecordExecSpell
                 || spell instanceof AkashicRecordAccessSpell
+                || spell.getCastType() == CastType.CONTINUOUS
                 || AkashicRecordHelper.isRecastSpell(spell, spellLevel, entity);
     }
 

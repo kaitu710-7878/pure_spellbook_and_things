@@ -1,5 +1,12 @@
 # Changelog / 変更履歴
 
+## [1.1.4-beta] - 2026-11-17
+
+### Changed / 変更
+- **Continuous Spell Restriction & Descriptions / 継続照射型魔法の格納不可化と説明文更新**:
+  - Disallowed `CastType.CONTINUOUS` spells from being stored in or invoked by the Akashic Record alongside Recast and Akashic Record spells. / リキャスト系・アカシックレコード系に加え、継続照射型魔法（`CastType.CONTINUOUS`）もアカシックレコードへの格納・実行対象外に変更。
+  - Updated `en_us.json` and `ja_jp.json` descriptions for `Akashic Record: Access` to clarify that certain spell types cannot be stored. / `アカシックレコード:アクセス` の説明文・UI表記を更新し、一部呪文が格納不可である旨を日英両言語で明記。
+
 ## [1.1.3-beta] - 2026-11-17
 
 ### Fixed / 修正
