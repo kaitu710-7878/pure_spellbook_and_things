@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
+import net.purespellbook.spell.AkashicRecordAccessSpell;
+import net.purespellbook.spell.AkashicRecordExecSpell;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -25,7 +27,17 @@ public final class AkashicRecordHelper {
     private AkashicRecordHelper() {}
 
     public static boolean isValidScroll(ItemStack stack) {
-        return !stack.isEmpty() && stack.getItem() instanceof Scroll;
+        if (stack.isEmpty() || !(stack.getItem() instanceof Scroll)) {
+            return false;
+        }
+        if (ISpellContainer.isSpellContainer(stack)) {
+            SpellData data = ISpellContainer.get(stack).getSpellAtIndex(0);
+            if (data != null && (data.getSpell() instanceof AkashicRecordAccessSpell
+                    || data.getSpell() instanceof AkashicRecordExecSpell)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Nullable

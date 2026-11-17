@@ -1,5 +1,10 @@
 # Changelog / 変更履歴
 
+## [1.1.1-beta] - 2026-11-17
+
+### Fixed / 修正
+- **Akashic Record Recursion Prevention / アカシックレコード無限ループ防止**: Blocked Akashic Record spells (`akashic_record_access` and `akashic_record_exec_1..4`) from being stored in or read by Akashic Record slots in `AkashicRecordHelper.isValidScroll`, preventing recursive cost calculation and execution. / `AkashicRecordHelper.isValidScroll` にてアカシックレコード系呪文のスクロールを格納・参照不可とし、無限ループおよび不正なコスト合算を防止。
+
 ## [1.1.0-beta] - 2026-11-17
 
 ### Added / 追加
