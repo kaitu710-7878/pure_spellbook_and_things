@@ -153,8 +153,17 @@ public class AkashicRecordExecSpell extends AbstractPureSpell {
                         PacketDistributor.sendToPlayer(serverPlayer,
                                 new OnClientCastPacket(storedSpell.getSpellId(), storedLevel, castSource, serializable));
                     }
+                    if (resultCastData != null) {
+                        resultCastData.reset();
+                    }
+                    if (entry.castData() != null && entry.castData() != resultCastData) {
+                        entry.castData().reset();
+                    }
                     playerMagicData.setAdditionalCastData(null);
                 } catch (Throwable t) {
+                    if (entry.castData() != null) {
+                        entry.castData().reset();
+                    }
                     playerMagicData.setAdditionalCastData(null);
                     LOGGER.error("Akashic Record failed while executing stored spell {}", storedSpell.getSpellId(), t);
                 }

@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -62,6 +63,7 @@ public class PureSpellbookMod {
         ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModEntities.register(modEventBus);
         ModLootModifiers.register(modEventBus);
         CREATIVE_TABS.register(modEventBus);
 
@@ -94,6 +96,7 @@ public class PureSpellbookMod {
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.PURE_SCROLL_FORGE.get(), PureScrollForgeRenderer::new);
+            event.registerEntityRenderer(ModEntities.LEGACY_ECHO_STRIKE.get(), NoopRenderer::new);
         }
 
         @SubscribeEvent

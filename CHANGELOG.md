@@ -1,5 +1,20 @@
 # Changelog / 変更履歴
 
+## [1.2.1-beta] - 2026-11-22
+
+### Fixed / 修正
+- **Akashic Record Scroll Consumption / スクロールからのアカシックレコード消費修正**: Fixed `Akashic Record: Access` not consuming the scroll item in Survival mode because opening the menu interrupted the cast lifecycle before ISS consumed the scroll. / `アカシックレコード:アクセス` をサバイバルモードでスクロールから使用した際、メニューを開くことで詠唱が中断扱いになりスクロールが消費されない不具合を修正。
+- **Targeted Area Ring Cleanup in Akashic Record / アカシックレコード経由の範囲表示リング残留修正**: Reset each stored spell's `ICastData` (such as `TargetedTargetAreaCastData` used by `Legacy of the past: Haste`) after `onCast` so target-area indicator rings are discarded immediately upon cast completion instead of lingering and following the target. / アカシックレコード実行完了時に格納呪文ごとの `ICastData`（`過去の遺産:ヘイスト` の範囲表示リング等）を `reset()` するようにし、詠唱後に白い円が残り続けて追従する不具合を修正。
+- **Japanese Effect Name / 日本語バフ名修正**: Fixed the Japanese effect name of `Legacy of the past: Echo Strike` from `エコーイングストライク` to `エコーストライク`. / `過去の遺産:エコーストライク` のバフ日本語名を `エコーイングストライク` から `エコーストライク` に修正。
+
+## [1.2.0-beta] - 2026-11-22
+
+### Added / 追加
+- **Legacy of the Past Pure Spells / 過去の遺産シリーズ呪文（無垢属性）**:
+  - **Legacy of the past: Echo Strike / 過去の遺産:エコーストライク** (`legacy_echo_strike`): Recreates ISS 3.4.0.4's Echoing Strikes (Pure Spell Power, max level 1 Legendary matching original Lv.5, addon tier scaling, and direct ISS icon references). / ISS 3.4.0.4時代のエコーストライクを無垢魔法威力参照で再現（最大レベル1・レジェンダリーで元Lv.5相当、アドオンtierによるレベル上昇対応、テクスチャはISS本家参照）。
+  - **Legacy of the past: Oakskin / 過去の遺産:オークスキン** (`legacy_oakskin`): Recreates ISS 3.4.0.4's Oakskin (Pure Spell Power, max level 1 Legendary matching original Lv.8 with 50% damage reduction and no slowness, addon tier scaling, and direct ISS icon references). / ISS 3.4.0.4時代のオークスキンを無垢魔法威力参照で再現（最大レベル1・レジェンダリーで元Lv.8相当の50%軽減・移動低下なし、アドオンtier対応、テクスチャはISS本家参照）。
+  - **Legacy of the past: Haste / 過去の遺産:ヘイスト** (`legacy_haste`): Recreates ISS 3.4.0.4's Haste (Pure Spell Power, max level 1 Legendary matching original Lv.6 with 3-block AoE targeting up to 5 allies, addon tier scaling, and direct ISS icon references). / ISS 3.4.0.4時代のヘイストを無垢魔法威力参照で再現（最大レベル1・レジェンダリーで元Lv.6相当・周囲3ブロック最大5体付与、アドオンtier対応、テクスチャはISS本家参照）。
+
 ## [1.1.4-beta] - 2026-11-17
 
 ### Changed / 変更

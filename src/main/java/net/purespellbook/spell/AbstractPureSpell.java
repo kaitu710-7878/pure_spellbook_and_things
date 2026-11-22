@@ -36,6 +36,14 @@ public abstract class AbstractPureSpell extends AbstractSpell {
         return spellId;
     }
 
+    /**
+     * Optional custom spell icon resource returned via {@code AbstractSpellMixin}
+     * because {@link AbstractSpell#getSpellIconResource()} is final in ISS.
+     */
+    public ResourceLocation getCustomSpellIconResource() {
+        return null;
+    }
+
     @Override
     public DefaultConfig getDefaultConfig() {
         return defaultConfig;

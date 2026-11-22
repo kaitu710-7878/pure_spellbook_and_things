@@ -30,6 +30,9 @@ public class ModSpells {
     public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_EXEC_3 = registerSpell(() -> new AkashicRecordExecSpell(3));
     public static final RegistryObject<AbstractSpell> AKASHIC_RECORD_EXEC_4 = registerSpell(() -> new AkashicRecordExecSpell(4));
     public static final RegistryObject<AbstractSpell> EXTENSION = registerSpell(ExtensionSpell::new);
+    public static final RegistryObject<AbstractSpell> LEGACY_ECHO_STRIKE = registerSpell(LegacyEchoStrikeSpell::new);
+    public static final RegistryObject<AbstractSpell> LEGACY_OAKSKIN = registerSpell(LegacyOakskinSpell::new);
+    public static final RegistryObject<AbstractSpell> LEGACY_HASTE = registerSpell(LegacyHasteSpell::new);
 
     private static RegistryObject<AbstractSpell> registerSpell(Supplier<AbstractSpell> supplier) {
         AbstractSpell spell = supplier.get();
@@ -52,7 +55,10 @@ public class ModSpells {
                 AKASHIC_RECORD_EXEC_2,
                 AKASHIC_RECORD_EXEC_3,
                 AKASHIC_RECORD_EXEC_4,
-                EXTENSION
+                EXTENSION,
+                LEGACY_ECHO_STRIKE,
+                LEGACY_OAKSKIN,
+                LEGACY_HASTE
         );
     }
 

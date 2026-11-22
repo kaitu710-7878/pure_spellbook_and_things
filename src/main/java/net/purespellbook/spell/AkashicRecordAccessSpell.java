@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
+import io.redspace.ironsspellbooks.item.Scroll;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -59,6 +60,10 @@ public class AkashicRecordAccessSpell extends AbstractPureSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof ServerPlayer serverPlayer) {
+            if (castSource == CastSource.SCROLL) {
+                // Opening a container menu interrupts/cancels the active cast before MagicManager consumes the scroll.
+                Scroll.attemptRemoveScrollAfterCast(serverPlayer);
+            }
             NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
                 @Override
                 public Component getDisplayName() {

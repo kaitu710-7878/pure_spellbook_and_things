@@ -58,6 +58,9 @@ All Pure spells are **Legendary (Max Level 1)**, cannot be crafted in a normal S
 13. **Akashic Record: Execution III**: Same as Execution I, executing Page 3.
 14. **Akashic Record: Execution IV**: Same as Execution I, executing Page 4.
 15. **Extension**: 200 Mana, 2s cast, 2m cooldown (supports addon max-level extension). Extends the duration of all active beneficial buffs by 1m30s at the same amplifier (scales with Spell Power and spell level).
+16. **Legacy of the past: Echo Strike**: 90 Mana, instant cast, 60s cooldown (Legendary max Lv.1, equivalent to ISS 3.4.0.4 Echoing Strikes Lv.5; supports addon tier scaling; uses Pure Spell Power). Melee and arrow hits unleash delayed 3-block AoE echoes.
+17. **Legacy of the past: Oakskin**: 50 Mana, instant cast, 35s cooldown (Legendary max Lv.1, equivalent to ISS 3.4.0.4 Oakskin Lv.8; supports addon tier scaling; uses Pure Spell Power). Grants 50% damage reduction at Lv.1 without slowness.
+18. **Legacy of the past: Haste**: 100 Mana, 1.5s cast, 45s cooldown (Legendary max Lv.1, equivalent to ISS 3.4.0.4 Haste Lv.6; supports addon tier scaling; uses Pure Spell Power). Boosts movement speed, attack speed, mana regen, and cast time reduction (+60% at Lv.1) for up to 5 allies in a 3-block radius.
 
 #### Akashic Record Notes
 - **Processing Order**: Slots in each page (`6×3`) are processed **from top-left to bottom-right** (left-to-right, top row to bottom row).
@@ -122,6 +125,9 @@ Dual-licensed under **GPL-3.0-or-later AND LGPL-2.1-or-later**. See [LICENSE](LI
 13. **アカシックレコード:実行3**: 実行1のページ3版。
 14. **アカシックレコード:実行4**: 実行1のページ4版。
 15. **延長**: 消費マナ200、詠唱2秒、クールダウン2分（アドオンによるレベル上限拡張に対応）。自身の持つすべてのバフを同じ効果レベルのまま1分30秒延長します（魔法威力・呪文レベルで延長時間が増加）。
+16. **過去の遺産:エコーストライク**: 消費マナ90、即時発動、クールダウン60秒（レジェンダリー最大Lv.1でISS 3.4.0.4時代Lv.5相当、アドオンによるレベル上昇対応、無垢魔法威力参照）。近接・弓攻撃のヒット時に半径3ブロックの遅延範囲エコーを発生させます。
+17. **過去の遺産:オークスキン**: 消費マナ50、即時発動、クールダウン35秒（レジェンダリー最大Lv.1でISS 3.4.0.4時代Lv.8相当、アドオンによるレベル上昇対応、無垢魔法威力参照）。移動速度低下なしで割合ダメージ軽減（Lv.1で50%軽減）を付与します。
+18. **過去の遺産:ヘイスト**: 消費マナ100、詠唱1.5秒、クールダウン45秒（レジェンダリー最大Lv.1でISS 3.4.0.4時代Lv.6相当、アドオンによるレベル上昇対応、無垢魔法威力参照）。対象の周囲3ブロック内の最大5体に移動速度・攻撃速度・マナ回復・詠唱時間短縮のバフ（Lv.1で+60%）を付与します。
 
 #### アカシックレコード使用上の注意
 - **処理順**: 各ページ（`6×3`）に格納されたスクロールは **左上から右下へ向かって順に** 処理されます。

@@ -12,6 +12,9 @@ import net.minecraftforge.registries.RegistryObject;
 import net.purespellbook.PureSpellbookMod;
 import net.purespellbook.effect.EmpoweredEffect;
 import net.purespellbook.effect.EvasiveDodgeEffect;
+import net.purespellbook.effect.LegacyEchoStrikesEffect;
+import net.purespellbook.effect.LegacyHastenedEffect;
+import net.purespellbook.effect.LegacyOakskinEffect;
 import net.purespellbook.effect.OverloadEffect;
 import net.purespellbook.effect.PurificationEffect;
 import net.purespellbook.effect.SimplePureBuffEffect;
@@ -46,6 +49,23 @@ public class ModMobEffects {
 
     public static final RegistryObject<MobEffect> EVASIVE_DODGE = MOB_EFFECTS.register("evasive_dodge",
             () -> new EvasiveDodgeEffect(MobEffectCategory.BENEFICIAL, 0x9D6BFF));
+
+    public static final RegistryObject<MobEffect> LEGACY_ECHOING_STRIKES = MOB_EFFECTS.register("legacy_echoing_strikes",
+            () -> new LegacyEchoStrikesEffect(MobEffectCategory.BENEFICIAL, 0x9F0BE3));
+
+    public static final RegistryObject<MobEffect> LEGACY_OAKSKIN = MOB_EFFECTS.register("legacy_oakskin",
+            () -> new LegacyOakskinEffect(MobEffectCategory.BENEFICIAL, 0xFFEF95));
+
+    public static final RegistryObject<MobEffect> LEGACY_HASTENED = MOB_EFFECTS.register("legacy_hastened",
+            () -> new LegacyHastenedEffect(MobEffectCategory.BENEFICIAL, 0xD9C043)
+                    .addAttributeModifier(Attributes.MOVEMENT_SPEED,
+                            "8f4c1a2e-3b5d-4c7e-9f1a-2b3c4d5e6f04", 0.10D, AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(Attributes.ATTACK_SPEED,
+                            "8f4c1a2e-3b5d-4c7e-9f1a-2b3c4d5e6f05", 0.10D, AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(AttributeRegistry.MANA_REGEN.get(),
+                            "8f4c1a2e-3b5d-4c7e-9f1a-2b3c4d5e6f06", 0.10D, AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(AttributeRegistry.CAST_TIME_REDUCTION.get(),
+                            "8f4c1a2e-3b5d-4c7e-9f1a-2b3c4d5e6f07", 0.10D, AttributeModifier.Operation.MULTIPLY_TOTAL));
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

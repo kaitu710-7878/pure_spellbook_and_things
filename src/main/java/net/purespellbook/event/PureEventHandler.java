@@ -13,16 +13,20 @@ import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -32,7 +36,10 @@ import net.purespellbook.PureSpellbookMod;
 import net.purespellbook.akashic.AkashicRecordHelper;
 import net.purespellbook.akashic.AkashicRecordSavedData;
 import net.purespellbook.effect.EvasiveDodgeEffect;
+import net.purespellbook.effect.LegacyEchoStrikesEffect;
+import net.purespellbook.effect.LegacyOakskinEffect;
 import net.purespellbook.effect.PurificationEffect;
+import net.purespellbook.entity.LegacyEchoStrikeEntity;
 import net.purespellbook.network.ModNetwork;
 import net.purespellbook.network.SyncAkashicRecordPacket;
 import net.purespellbook.registry.ModAttributes;
@@ -156,6 +163,38 @@ public class PureEventHandler {
                 magicData.setMana(nextMana);
                 PacketDistributor.sendToPlayer(player, new SyncManaPacket(magicData));
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+        DamageSource damageSource = event.getSource();
+        if (damageSource.getEntity() instanceof LivingEntity attacker
+                && !attacker.level().isClientSide
+                && (damageSource.getDirectEntity() == attacker || damageSource.getDirectEntity() instanceof AbstractArrow)
+                && !(damageSource instanceof SpellDamageSource)) {
+            MobEffectInstance effect = attacker.getEffect(ModMobEffects.LEGACY_ECHOING_STRIKES.get());
+            if (effect != null) {
+                float percent = LegacyEchoStrikesEffect.getDamageModifier(effect.getAmplifier(), attacker);
+                LegacyEchoStrikeEntity echo = new LegacyEchoStrikeEntity(
+                        attacker.level(), attacker, event.getAmount() * percent, 3.0F);
+                echo.setPos(event.getEntity().getBoundingBox().getCenter().subtract(0, echo.getBbHeight() * 0.5D, 0));
+                attacker.level().addFreshEntity(echo);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingDamage(LivingDamageEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide) {
+            return;
+        }
+        MobEffectInstance effect = entity.getEffect(ModMobEffects.LEGACY_OAKSKIN.get());
+        if (effect != null) {
+            int lvl = effect.getAmplifier() + 1;
+            float multiplier = Math.max(0.0F, 1.0F - LegacyOakskinEffect.getReductionAmount(lvl));
+            event.setAmount(event.getAmount() * multiplier);
         }
     }
 

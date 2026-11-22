@@ -4,12 +4,14 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastResult;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.purespellbook.akashic.AkashicCastContext;
 import net.purespellbook.registry.ModMobEffects;
+import net.purespellbook.spell.AbstractPureSpell;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,6 +20,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = AbstractSpell.class, remap = false)
 public class AbstractSpellMixin {
+    @Inject(method = "getSpellIconResource", at = @At("HEAD"), cancellable = true)
+    private void pureSpellbook$overrideSpellIcon(CallbackInfoReturnable<ResourceLocation> cir) {
+        if ((Object) this instanceof AbstractPureSpell pureSpell) {
+            ResourceLocation custom = pureSpell.getCustomSpellIconResource();
+            if (custom != null) {
+                cir.setReturnValue(custom);
+            }
+        }
+    }
+
     @Inject(method = "canBeInterrupted", at = @At("HEAD"), cancellable = true)
     private void pureSpellbook$preventInterruptionWhenEmpowered(Player player, CallbackInfoReturnable<Boolean> cir) {
         if (player != null && player.hasEffect(ModMobEffects.EMPOWERED.get())) {

@@ -37,6 +37,10 @@
   "effect.pure_spellbook_and_things.overload": "Overload",
   "effect.pure_spellbook_and_things.purification": "Purification",
   "effect.pure_spellbook_and_things.evasive_dodge": "Evasive Dodge",
+  "effect.pure_spellbook_and_things.legacy_echoing_strikes": "Echoing Strikes",
+  "effect.pure_spellbook_and_things.legacy_oakskin": "Oakskin",
+  "effect.pure_spellbook_and_things.legacy_hastened": "Hastened",
+  "entity.pure_spellbook_and_things.legacy_echo_strike": "Echoing Strike",
 
   "spell.pure_spellbook_and_things.empowered": "Empowered",
   "spell.pure_spellbook_and_things.empowered.guide": "Grants +40% Spell Power, +85% Attack Damage, and uninterruptible casting.",
@@ -67,5 +71,11 @@
   "spell.pure_spellbook_and_things.akashic_record_exec_4": "Akashic Record: Execution IV",
   "spell.pure_spellbook_and_things.akashic_record_exec_4.guide": "Simultaneously invokes all scrolls stored on Page 4 of the Akashic Record with combined mana, cast time, and cooldown.",
   "spell.pure_spellbook_and_things.extension": "Extension",
-  "spell.pure_spellbook_and_things.extension.guide": "Extends the duration of all active beneficial effects without changing their amplifier. Scales with Spell Power and spell level."
+  "spell.pure_spellbook_and_things.extension.guide": "Extends the duration of all active beneficial effects without changing their amplifier. Scales with Spell Power and spell level.",
+  "spell.pure_spellbook_and_things.legacy_echo_strike": "Legacy of the past: Echo Strike",
+  "spell.pure_spellbook_and_things.legacy_echo_strike.guide": "Recreates Echoing Strikes from ISS 3.4.0.4 using Pure Spell Power. Melee and arrow hits unleash delayed AoE echoes.",
+  "spell.pure_spellbook_and_things.legacy_oakskin": "Legacy of the past: Oakskin",
+  "spell.pure_spellbook_and_things.legacy_oakskin.guide": "Recreates Oakskin from ISS 3.4.0.4 using Pure Spell Power. Grants percentage damage reduction without slowing movement.",
+  "spell.pure_spellbook_and_things.legacy_haste": "Legacy of the past: Haste",
+  "spell.pure_spellbook_and_things.legacy_haste.guide": "Recreates Haste from ISS 3.4.0.4 using Pure Spell Power. Boosts movement speed, attack speed, mana regen, and cast time reduction for up to 5 allies in a 3-block radius."
 }

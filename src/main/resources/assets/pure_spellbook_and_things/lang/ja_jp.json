@@ -37,6 +37,10 @@
   "effect.pure_spellbook_and_things.overload": "オーバーロード",
   "effect.pure_spellbook_and_things.purification": "ピュリフィケーション",
   "effect.pure_spellbook_and_things.evasive_dodge": "イヴェイシブドッジ",
+  "effect.pure_spellbook_and_things.legacy_echoing_strikes": "エコーストライク",
+  "effect.pure_spellbook_and_things.legacy_oakskin": "オークスキン",
+  "effect.pure_spellbook_and_things.legacy_hastened": "ヘイスト",
+  "entity.pure_spellbook_and_things.legacy_echo_strike": "エコーストライク",
 
   "spell.pure_spellbook_and_things.empowered": "エンパワード",
   "spell.pure_spellbook_and_things.empowered.guide": "魔法威力+40%、近接攻撃力+85%、詠唱中断無効の効果を付与します。",
@@ -67,5 +71,11 @@
   "spell.pure_spellbook_and_things.akashic_record_exec_4": "アカシックレコード:実行4",
   "spell.pure_spellbook_and_things.akashic_record_exec_4.guide": "アカシックレコードのページ4に格納したスクロールの効果を詠唱終了時にすべて同時に発動します。消費マナ・詠唱時間・クールダウンは格納スクロールの合算値になります。",
   "spell.pure_spellbook_and_things.extension": "延長",
-  "spell.pure_spellbook_and_things.extension.guide": "自身の持つすべてのバフを同じ効果レベルのまま延長します。魔法威力と呪文レベルに応じて延長時間が増加します。"
+  "spell.pure_spellbook_and_things.extension.guide": "自身の持つすべてのバフを同じ効果レベルのまま延長します。魔法威力と呪文レベルに応じて延長時間が増加します。",
+  "spell.pure_spellbook_and_things.legacy_echo_strike": "過去の遺産:エコーストライク",
+  "spell.pure_spellbook_and_things.legacy_echo_strike.guide": "ISS 3.4.0.4時代のエコーストライクを無垢魔法威力参照で再現。近接・弓攻撃のヒット時に遅延範囲エコーを発生させます。",
+  "spell.pure_spellbook_and_things.legacy_oakskin": "過去の遺産:オークスキン",
+  "spell.pure_spellbook_and_things.legacy_oakskin.guide": "ISS 3.4.0.4時代のオークスキンを無垢魔法威力参照で再現。移動速度低下なしで割合ダメージ軽減を付与します。",
+  "spell.pure_spellbook_and_things.legacy_haste": "過去の遺産:ヘイスト",
+  "spell.pure_spellbook_and_things.legacy_haste.guide": "ISS 3.4.0.4時代のヘイストを無垢魔法威力参照で再現。対象周囲3ブロック内の最大5体に移動速度・攻撃速度・マナ回復・詠唱時間短縮のバフを付与します。"
 }
