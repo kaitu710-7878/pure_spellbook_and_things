@@ -16,9 +16,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -105,9 +107,14 @@ public class PureEventHandler {
             return;
         }
         if (attacker.hasEffect(ModMobEffects.WEAPON_INTERACTION.get())) {
-            float weaponDamage = Utils.getWeaponDamage(attacker, event.getEntity().getMobType());
-            if (weaponDamage > 0.0F) {
-                event.setAmount(event.getAmount() + weaponDamage);
+            double finalAttackDamage = attacker.getAttribute(Attributes.ATTACK_DAMAGE) != null
+                    ? attacker.getAttributeValue(Attributes.ATTACK_DAMAGE)
+                    : 0.0D;
+            float enchantBonus = EnchantmentHelper.getDamageBonus(
+                    attacker.getMainHandItem(), event.getEntity().getMobType());
+            float totalBonus = (float) Math.max(0.0D, finalAttackDamage + enchantBonus);
+            if (totalBonus > 0.0F) {
+                event.setAmount(event.getAmount() + totalBonus);
             }
         }
         if (attacker.hasEffect(ModMobEffects.HEALING_ATTACK.get())) {

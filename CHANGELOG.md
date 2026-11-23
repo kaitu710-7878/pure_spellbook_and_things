@@ -1,5 +1,10 @@
 # Changelog / 変更履歴
 
+## [1.2.2-beta] - 2026-11-23
+
+### Changed / 変更
+- **Weapon Interaction Damage Calculation / ウェポンインタラクションのダメージ加算仕様変更**: Changed the bonus damage added to spell hits from `Utils.getWeaponDamage` (which excluded base fist/stat attack damage when unequipped/unbuffed) to the attacker's final `Attributes.ATTACK_DAMAGE` value (matching L2Library/L2Tabs final Attack Damage) plus `EnchantmentHelper.getDamageBonus`, so base stat buffs, attribute modifiers, and weapon enchantments all apply. Updated the English and Japanese descriptions accordingly. / 魔法ダメージへの加算値を従来の `Utils.getWeaponDamage`（武器攻撃力基準）から、L2Library/L2Tabs の最終攻撃力に相当する `Attributes.ATTACK_DAMAGE` の最終値と武器エンチャント補正（`EnchantmentHelper.getDamageBonus`）の合算値に変更し、基礎ステータスバフや属性補正・エンチャントの恩恵をすべて受けるよう改善。あわせて日英の説明文を更新。
+
 ## [1.2.1-beta] - 2026-11-22
 
 ### Fixed / 修正

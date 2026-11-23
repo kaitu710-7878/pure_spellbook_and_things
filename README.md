@@ -44,7 +44,7 @@ An addon mod for **Iron's Spells 'n Spellbooks** (Minecraft 1.20.1 Forge) introd
 All Pure spells are **Legendary (Max Level 1)**, cannot be crafted in a normal Scroll Forge, cannot be cast by enemies, and can be obtained via Pure Scroll Forge, loot tables, or Creative mode.
 
 1. **Empowered**: +40% Spell Power, +85% Attack Damage, and uninterruptible casting.
-2. **Weapon Interaction**: Adds held weapon base damage to all spell damage.
+2. **Weapon Interaction**: Adds your final Attack Damage (including base stat buffs and weapon enchantment bonuses) to all spell damage.
 3. **Soul Shaving**: Every hit (including during i-frames and multi-hit spells) reduces target HP directly by `1% of Max HP` (clamped 1–40) via `setHealth`.
 4. **Healing Attack**: Melee hits restore 3 Mana; spell hits restore 1 HP.
 5. **Overload Overclocking**: No cooldown/mana/cast time. Resets all spell cooldowns and restores full mana while applying/stacking the neutral `Overload` effect (-10% Max Mana per level, immune to purification).
@@ -111,7 +111,7 @@ Dual-licensed under **GPL-3.0-or-later AND LGPL-2.1-or-later**. See [LICENSE](LI
 すべての無垢呪文は**レジェンダリー（通常最大レベル1）**で、通常のスクロールフォージでは作成できず、敵も詠唱しません。ピュアスクロールフォージ、チェスト等のルートテーブル、クリエイティブモードから入手できます。
 
 1. **エンパワード**: 魔法威力+40%、近接攻撃力+85%、詠唱中断無効を付与。
-2. **ウェポンインタラクション**: 手に持つ武器の基礎攻撃力をすべての魔法ダメージに加算。
+2. **ウェポンインタラクション**: すべての魔法ダメージに最終攻撃力（基礎ステータスバフや武器エンチャント等の補正を含む）を加算。
 3. **魂削り**: すべての攻撃ヒット（無敵時間中や多段ヒット含む）ごとに、対象HPを「現在HP − 最大HPの1%（最小1、最大40）」へセットヘルスで直接削ります。
 4. **ヒーリングアタック**: 近接ヒット時マナ3回復、魔法ヒット時HP1回復。
 5. **オーバーロードオーバークロッキング**: クールダウン・マナ・詠唱時間なし。全クールダウンをリセットしマナを全回復する代わりに、浄化不可の中立エフェクト「オーバーロード」（レベル×10%最大マナ減少）を付与・累積。
